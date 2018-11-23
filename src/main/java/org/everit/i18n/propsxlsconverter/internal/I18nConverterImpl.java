@@ -26,15 +26,17 @@ import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Properties;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.io.FileUtils;
@@ -51,8 +53,6 @@ import org.everit.i18n.propsxlsconverter.internal.workbook.WorkbookWriter;
  * The {@link I18nConverter} implementation.
  */
 public class I18nConverterImpl implements I18nConverter {
-
-  private static final int SEPARATOR_SIZE = 5;
 
   private static final String UNDERLINE = "_";
 
@@ -155,11 +155,12 @@ public class I18nConverterImpl implements I18nConverter {
           // ignore empty and comment lines
           if (!"".equals(line) && (line.charAt(0) != '#')) {
             String unescapedLine = StringEscapeUtils.unescapeJava(line);
-            int separatorIndex = getPropertySeparatorIndex(unescapedLine);
-            String propKey = unescapedLine.substring(0, separatorIndex);
-            String propValue = unescapedLine.substring(separatorIndex + 1);
+            Entry<String, String> keyValue =
+                    getPropertyKeyValue(unescapedLine);
 
-            insertOrUpdateWorkbookRow(workbookWriter, lang, fileAccess, propKey, propValue);
+            insertOrUpdateWorkbookRow(
+                    workbookWriter, lang, fileAccess,
+                    keyValue.getKey(), keyValue.getValue());
           }
         }
       } catch (IOException e) {
@@ -232,23 +233,15 @@ public class I18nConverterImpl implements I18nConverter {
     return "";
   }
 
-  private int getPropertySeparatorIndex(final String unescapedLine) {
-    int[] separators = new int[SEPARATOR_SIZE];
-    int index = 0;
-    separators[index++] = unescapedLine.indexOf('=');
-    separators[index++] = unescapedLine.indexOf(' ');
-    separators[index++] = unescapedLine.indexOf(':');
-    separators[index++] = unescapedLine.indexOf('\t');
-    separators[index++] = unescapedLine.indexOf('\f');
-    Arrays.sort(separators);
-    for (int i = 0; i < separators.length; i++) {
-      if (separators[i] != -1) {
-        return separators[i];
+  private Entry<String, String> getPropertyKeyValue(final String unescapedLine) {
+      Matcher m = Pattern.compile("(.*?)[= :\t\f]+(.*)").matcher(unescapedLine);
+      if (!m.matches()) {
+          throw new RuntimeException(
+                  "Not find separator in the line. Unescaped line: ["
+                          + unescapedLine + "].");
       }
+      return new SimpleEntry<>(m.group(1), m.group(2));
     }
-    throw new RuntimeException("Not find separator in the line. Unescaped line: [" + unescapedLine
-        + "].");
-  }
 
   @Override
   public void importFromXls(final String xlsFileName, final String workingDirectory) {
