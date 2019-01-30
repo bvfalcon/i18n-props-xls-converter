@@ -250,7 +250,7 @@ public class I18nConverterImpl implements I18nConverter {
 
     WorkbookReader workbookReader = new WorkbookReader(xlsFileName);
 
-    Map<String, Properties> langProperties = new HashMap<String, Properties>();
+    Map<String, Properties> langProperties = new HashMap<>();
     langProperties.put("", new Properties());
 
     String[] languages = workbookReader.getLanguages();
@@ -281,8 +281,8 @@ public class I18nConverterImpl implements I18nConverter {
       propKeySequence.add(nextRow.propKey);
     }
 
-    writePropertiesToFiles(langProperties, prevPropertiesFile, workingDirectory,
-        propKeySequence);
+//    writePropertiesToFiles(langProperties, prevPropertiesFile, workingDirectory,
+//        propKeySequence);
   }
 
   private void insertOrUpdateWorkbookRow(final WorkbookWriter workbookWriter, final String lang,
@@ -393,6 +393,7 @@ public class I18nConverterImpl implements I18nConverter {
       final String fileAccess, final String workingDirectory,
       final ArrayList<String> propKeySequence) {
 
+
     langProperties.forEach((key, value) -> {
 
       File langFile = null;
@@ -419,7 +420,7 @@ public class I18nConverterImpl implements I18nConverter {
             lastIndexOfFolderSeparator);
         langFile = new File(workingDirectory, pathWithoutFileName + langFileName);
       }
-
+System.out.println("LANG FILE: " + langFile);
       try (FileOutputStream out = new FileOutputStream(langFile);
           OutputStreamWriter outputStreamWriter = new OutputStreamWriter(out,
               StandardCharsets.UTF_8);

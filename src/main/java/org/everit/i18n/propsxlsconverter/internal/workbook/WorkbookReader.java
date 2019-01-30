@@ -23,6 +23,7 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Row;
 import org.everit.i18n.propsxlsconverter.internal.dto.WorkbookRowDTO;
 
 /**
@@ -64,12 +65,12 @@ public class WorkbookReader extends AbstractWorkbook {
     }
 
     HSSFRow row = sheet.getRow(rowNumber++);
-    HSSFCell propertiesFileNameCell = row.getCell(COLUMN_PROPERTIES_FILE_NAME);
+    HSSFCell propertiesFileNameCell = row.getCell(COLUMN_PROPERTIES_FILE_NAME, Row.CREATE_NULL_AS_BLANK);
     String propertiesFileName = propertiesFileNameCell.getStringCellValue();
 
-    HSSFCell propKeyCell = row.getCell(COLUMN_PROPERTY_KEY);
-    HSSFCell defaultLangCell = row.getCell(COLUMN_DEFAULT_LANG);
-    HashMap<String, String> langValues = new HashMap<String, String>();
+    HSSFCell propKeyCell = row.getCell(COLUMN_PROPERTY_KEY, Row.CREATE_NULL_AS_BLANK);
+    HSSFCell defaultLangCell = row.getCell(COLUMN_DEFAULT_LANG, Row.CREATE_NULL_AS_BLANK);
+    HashMap<String, String> langValues = new HashMap<>();
 
     langColumnNumber.forEach((key, value) -> {
       HSSFCell langCell = row.getCell(value);
