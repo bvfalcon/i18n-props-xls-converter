@@ -42,7 +42,7 @@ import java.util.regex.Pattern;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.DirectoryFileFilter;
 import org.apache.commons.io.filefilter.RegexFileFilter;
-import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.everit.i18n.propsxlsconverter.I18nConverter;
 import org.everit.i18n.propsxlsconverter.internal.dto.PropKeyRowNumberDTO;
 import org.everit.i18n.propsxlsconverter.internal.dto.WorkbookRowDTO;
@@ -281,8 +281,8 @@ public class I18nConverterImpl implements I18nConverter {
       propKeySequence.add(nextRow.propKey);
     }
 
-//    writePropertiesToFiles(langProperties, prevPropertiesFile, workingDirectory,
-//        propKeySequence);
+    writePropertiesToFiles(langProperties, prevPropertiesFile, workingDirectory,
+        propKeySequence);
   }
 
   private void insertOrUpdateWorkbookRow(final WorkbookWriter workbookWriter, final String lang,
@@ -420,7 +420,8 @@ public class I18nConverterImpl implements I18nConverter {
             lastIndexOfFolderSeparator);
         langFile = new File(workingDirectory, pathWithoutFileName + langFileName);
       }
-System.out.println("LANG FILE: " + langFile);
+
+      System.out.println("LANG FILE: " + langFile);
       try (FileOutputStream out = new FileOutputStream(langFile);
           OutputStreamWriter outputStreamWriter = new OutputStreamWriter(out,
               StandardCharsets.UTF_8);
@@ -432,7 +433,7 @@ System.out.println("LANG FILE: " + langFile);
           String propValue = value.getProperty(propKey);
           sb.append(propKey);
           sb.append("=");
-          sb.append(StringEscapeUtils.escapeJava(propValue));
+          sb.append(propValue);
           sb.append("\n");
         });
 

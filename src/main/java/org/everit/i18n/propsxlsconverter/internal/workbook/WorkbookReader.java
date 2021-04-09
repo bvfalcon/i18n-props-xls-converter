@@ -65,11 +65,11 @@ public class WorkbookReader extends AbstractWorkbook {
     }
 
     HSSFRow row = sheet.getRow(rowNumber++);
-    HSSFCell propertiesFileNameCell = row.getCell(COLUMN_PROPERTIES_FILE_NAME, Row.CREATE_NULL_AS_BLANK);
+    HSSFCell propertiesFileNameCell = row.getCell(COLUMN_PROPERTIES_FILE_NAME, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
     String propertiesFileName = propertiesFileNameCell.getStringCellValue();
 
-    HSSFCell propKeyCell = row.getCell(COLUMN_PROPERTY_KEY, Row.CREATE_NULL_AS_BLANK);
-    HSSFCell defaultLangCell = row.getCell(COLUMN_DEFAULT_LANG, Row.CREATE_NULL_AS_BLANK);
+    HSSFCell propKeyCell = row.getCell(COLUMN_PROPERTY_KEY, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
+    HSSFCell defaultLangCell = row.getCell(COLUMN_DEFAULT_LANG, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
     HashMap<String, String> langValues = new HashMap<>();
 
     langColumnNumber.forEach((key, value) -> {
