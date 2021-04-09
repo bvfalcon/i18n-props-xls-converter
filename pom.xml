@@ -111,6 +111,14 @@
               <goal>single</goal>
             </goals>
             <configuration>
+              <descriptorRefs>
+                <descriptorRef>jar-with-dependencies</descriptorRef>
+              </descriptorRefs>
+              <archive>
+                <manifest>
+                  <mainClass>org.everit.i18n.propsxlsconverter.PropsXlsConverterMain</mainClass>
+                </manifest>
+              </archive>
               <descriptors>
                 <descriptor>src/main/resources/assembly/assembly.xml</descriptor>
               </descriptors>
