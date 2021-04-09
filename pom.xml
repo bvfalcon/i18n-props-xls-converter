@@ -28,7 +28,7 @@
 
   <groupId>org.everit.i18n</groupId>
   <artifactId>org.everit.i18n.propsxlsconverter</artifactId>
-  <version>1.0.1</version>
+  <version>1.1.0-SNAPSHOT</version>
 
   <packaging>jar</packaging>
 
@@ -37,8 +37,6 @@
 
   <properties>
     <projectpath>i18n-props-xls-converter</projectpath>
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>
   </properties>
 
   <scm>
