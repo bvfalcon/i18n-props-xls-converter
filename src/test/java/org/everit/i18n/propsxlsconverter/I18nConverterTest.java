@@ -42,9 +42,6 @@ public class I18nConverterTest {
 
   static {
     MESSAGES2_FOLDER_FILE_NAMES = new ArrayList<String>();
-    MESSAGES2_FOLDER_FILE_NAMES.add("messages.properties");
-    MESSAGES2_FOLDER_FILE_NAMES.add("messages_hu.properties");
-    MESSAGES2_FOLDER_FILE_NAMES.add("messages_de.properties");
     MESSAGES2_FOLDER_FILE_NAMES.add("messages2.properties");
     MESSAGES2_FOLDER_FILE_NAMES.add("messages2_hu.properties");
     MESSAGES2_FOLDER_FILE_NAMES.add("messages2_de.properties");
